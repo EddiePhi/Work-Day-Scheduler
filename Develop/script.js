@@ -1,3 +1,6 @@
+
+//SEE LINE 54 FOR NEEDED EDITS! KEEP IN MIND NOTE ON LINE 22!
+
 let currentDay = document.getElementById('currentDay');
 //let currentDay = $('#currentDay')
 currentDay.textContent = moment().format('MMMM Do YYYY');
@@ -11,9 +14,8 @@ let inputEl = $('.form-control');
 let workDetails = [];
 let workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
 
-// CONSIDER USING TEXTAREA TAG INSTEAD.
-
-currentDetails = {};
+//Able to save multiple items in Array from setStorage()
+let detailsArr = [];
 
 //For Loop with jQuery
 for (let i = 0; i < workHours.length; i++){
@@ -43,45 +45,68 @@ for (let i = 0; i < workHours.length; i++){
     saveEl.text(workHours[i] + ' Save');
     ulEl.append(saveEl)
 
-    $('.saveButton' + i).click(setStorage);
 
+    $('.saveButton' + i).click(setStorage);
+    
+    let currentDetails = {
+      detail: textEl.val()
+    };
+
+    //https://api.jquery.com/text/  --> for use of .val()
     function setStorage(){
+      //Need tow ork on scope of textEl to not override itself in local Storage
       localStorage.setItem("savedDetails", JSON.stringify(textEl.val()));
       console.log(textEl.val());
+
+      
+
+      let getStorage = localStorage.getItem("savedDetails") || "[]";
+        currentDetails = JSON.parse(getStorage);
+        console.log(currentDetails + 1);
+
+        detailsArr.push(currentDetails);
+        console.log(detailsArr);
     };
+
+    
 };
 
 
 
+
   
   
 
-// function testAlert(){
-//   alert('hi');
-// };
+
 
 //Local Storage Assistance from class TA - Paul Laird
+  
+// function setStorage(arr){
+//   localStorage.setItem("savedScores", JSON.stringify(arr));
+// };
 
-
-
-// // Submit Score afterwards
+// Submit Score afterwards
 // function submitScore(){
 //   let scoresArr = []; 
+//   let currentScore = document.getElementById("fieldEl").value + ": " + totalScore;
 
+//   const newScore = {
+//     score: currentScore
+//   };
 
-//   let getStorage = localStorage.getItem("savedDetails") || "[]";
-//   JSON.parse(getStorage);
-//   //console.log();
+//   let getStorage = localStorage.getItem("savedScores") || "[]";
+//   scoresArr = JSON.parse(getStorage);
+//   console.log(scoresArr);
+
+//   scoresArr.push(newScore);
+
+//   timeEl.textContent = "SCORES";
+//   secEl.textContent = currentScore;
   
-
-
-
-  //Unable to elegantly display scores.
-  // for (let i = 0; i < scoresArr.length; i++){
-  //   mainEl.append(JSON.stringify(scoresArr[i].score.split('"')));
-  // };
-
-  // setStorage(scoresArr);
+//   Unable to elegantly display scores.
+//   for (let i = 0; i < scoresArr.length; i++){
+//     mainEl.append(JSON.stringify(scoresArr[i].score.split('"')));
+//   };
 
 
 
