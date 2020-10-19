@@ -13,12 +13,14 @@ let workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM
 
 // CONSIDER USING TEXTAREA TAG INSTEAD.
 
+currentDetails = {};
+
 //For Loop with jQuery
 for (let i = 0; i < workHours.length; i++){
     //Variables need to be in for loop, otherwise only an unordered list for workHours.length - 1 will appear.
     let timeBlock = $('<div>');
     let ulEl = $('<ul>');
-    let listEl = $('<li>');
+    let textEl = $('<textarea>');
     let saveEl = $('<li>');
     
     //Set new Unordered List
@@ -32,22 +34,55 @@ for (let i = 0; i < workHours.length; i++){
     console.log(timeBlock);
 
     //Set Idle Work Detail block in the middle
-    listEl.attr('class', 'list-group-item workDetail' + i);
-    listEl.text(workHours[i] + ' Details');
-    ulEl.append(listEl)
+    textEl.attr('class', 'list-group-item workDetail' + i);
+    textEl.text(workHours[i] + ' Details');
+    ulEl.append(textEl)
 
     //Set Save Button to the right
     saveEl.attr('class', 'list-group-item saveButton' + i);
     saveEl.text(workHours[i] + ' Save');
     ulEl.append(saveEl)
+
+    $('.saveButton' + i).click(setStorage);
+
+    function setStorage(){
+      localStorage.setItem("savedDetails", JSON.stringify(textEl.val()));
+      console.log(textEl.val());
+    };
 };
 
-// Replace static List Element with input element on click.
-$('.list-group-item').click(function(){
-    // https://api.jquery.com/replacewith/
-    $(this).replaceWith(inputEl);
-    inputEl.replaceWith($(this));
-});
+
+
+  
+  
+
+// function testAlert(){
+//   alert('hi');
+// };
+
+//Local Storage Assistance from class TA - Paul Laird
+
+
+
+// // Submit Score afterwards
+// function submitScore(){
+//   let scoresArr = []; 
+
+
+//   let getStorage = localStorage.getItem("savedDetails") || "[]";
+//   JSON.parse(getStorage);
+//   //console.log();
+  
+
+
+
+  //Unable to elegantly display scores.
+  // for (let i = 0; i < scoresArr.length; i++){
+  //   mainEl.append(JSON.stringify(scoresArr[i].score.split('"')));
+  // };
+
+  // setStorage(scoresArr);
+
 
 
 {/* <ul class="list-group list-group-horizontal">
