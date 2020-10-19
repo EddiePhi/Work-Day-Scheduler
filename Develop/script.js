@@ -10,68 +10,64 @@ let container = $('.container');
 let inputGroup = $('.input-group');
 let inputEl = $('.form-control');
 
+//Variables need to be in for loop, otherwise only an unordered list for workHours.length - 1 will appear.
+let timeBlock = $('<div>');
+let ulEl = $('<ul>');
+let textEl = $('<textarea>');
+let saveEl = $('<li>');
+
 
 let workDetails = [];
-let workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
+let workHours = [];
 
 //Able to save multiple items in Array from setStorage()
-let detailsArr = [];
+let detailsArr = ['test'];
 
-//For Loop with jQuery
-for (let i = 0; i < workHours.length; i++){
-    //Variables need to be in for loop, otherwise only an unordered list for workHours.length - 1 will appear.
-    let timeBlock = $('<div>');
-    let ulEl = $('<ul>');
-    let textEl = $('<textarea>');
-    let saveEl = $('<li>');
-    
-    //Set new Unordered List
-    ulEl.attr('class', 'list-group list-group-horizontal')
-    container.append(ulEl);
-    
-    //Set Work Hour block to the left
-    timeBlock.attr('class', 'list-group-item');
-    timeBlock.text(workHours[i]);
-    ulEl.append(timeBlock);
-    console.log(timeBlock);
-
-    //Set Idle Work Detail block in the middle
-    textEl.attr('class', 'list-group-item workDetail' + i);
-    textEl.text(workHours[i] + ' Details');
-    ulEl.append(textEl)
-
-    //Set Save Button to the right
-    saveEl.attr('class', 'list-group-item saveButton' + i);
-    saveEl.text(workHours[i] + ' Save');
-    ulEl.append(saveEl)
-
-
-    $('.saveButton' + i).click(setStorage);
-    
-    let currentDetails = {
-      detail: textEl.val()
-    };
-
-    //https://api.jquery.com/text/  --> for use of .val()
-    function setStorage(){
-      //Need tow ork on scope of textEl to not override itself in local Storage
-      localStorage.setItem("savedDetails", JSON.stringify(textEl.val()));
-      console.log(textEl.val());
-
-      
-
-      let getStorage = localStorage.getItem("savedDetails") || "[]";
-        currentDetails = JSON.parse(getStorage);
-        console.log(currentDetails + 1);
-
-        detailsArr.push(currentDetails);
-        console.log(detailsArr);
-    };
 
     
+//Set new Unordered List
+ulEl.attr('class', 'list-group list-group-horizontal')
+container.append(ulEl);
+
+//Set Work Hour block to the left
+timeBlock.attr('class', 'list-group-item');
+timeBlock.text('Test Time');
+ulEl.append(timeBlock);
+
+//Set Idle Work Detail block in the middle
+textEl.attr('class', 'list-group-item workDetail');
+textEl.text(JSON.parse(localStorage.getItem("savedDetails")));
+ulEl.append(textEl);
+
+//Set Save Button to the right
+saveEl.attr('class', 'list-group-item saveButton');
+saveEl.text('Test Save');
+ulEl.append(saveEl);
+
+// let currentDetails = {};
+
+// console.log(currentDetails);
+
+
+$('.saveButton').click(setStorage);
+
+
+
+//https://api.jquery.com/text/  --> for use of .val()
+function setStorage(){
+
+  let getStorage = localStorage.getItem("savedDetails") || [];
+  currentDetails = JSON.parse(getStorage);
+  console.log(localStorage);
+
+  // detailsArr.push(currentDetails);
+  // console.log(detailsArr);
+
+  //Need tow ork on scope of textEl to not override itself in local Storage
+  localStorage.setItem("savedDetails", JSON.stringify(textEl.val()));
+  console.log(localStorage);
+  
 };
-
-
 
 
   
