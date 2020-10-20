@@ -1,6 +1,6 @@
 let currentDay = document.getElementById('currentDay');
 //let currentDay = $('#currentDay')
-currentDay.textContent = moment().format('H');
+currentDay.textContent = moment().format('MMMM Do YYYY');
 // moment().format('MMMM Do YYYY, h:mm:ss a'); returns a string
 
 let container = $('.container');
@@ -63,18 +63,16 @@ for (i = 0; i < workHours.length; i++){
   container.append(list);
 
   
-  details.attr('class', 'list-group-item details' + i);
+  details.attr('class', 'list-group-item color details' + i);
   list.append(details);
 
   
-  save.attr('class', 'list-group-item save' + i);
+  save.attr('class', 'list-group-item color save' + i);
   save.text('Save');
   list.append(save);
   save.click(setStorage);
 
 };
-
-
 
 function setStorage(){
 
@@ -87,6 +85,36 @@ function setStorage(){
   localStorage.setItem("savedDetails", JSON.stringify(detailsArr));
   console.log(localStorage);
 };
+
+//Coloring function Inspiration from lpham2525's github profile with permission from contributor
+//https://github.com/lpham2525/dayplanner/blob/master/assets/javascript/script.js
+
+let currentTime = parseInt(moment().format('H'))
+
+function bgColor(element) {
+  const timeVal = parseInt(element.attr('id'));
+  if (timeVal < currentTime) {
+    element.css('backgroundColor', 'lightGrey')
+  } else if (timeVal > currentTime) {
+    element.css('backgroundColor', 'lightGreen')
+  } else {
+    element.css('backgroundColor', 'red')
+  }
+}
+
+//Check time block vs real time.
+function checkTime() {
+  $('.list-group-horizontal').each(function () {
+    bgColor($(this))
+  });
+}
+
+checkTime();
+
+//Check every 15 minutes
+setInterval(checkTime, 90000)
+
+
 
 
 
