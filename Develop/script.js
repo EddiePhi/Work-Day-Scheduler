@@ -1,75 +1,174 @@
-
-//SEE LINE 54 FOR NEEDED EDITS! KEEP IN MIND NOTE ON LINE 22!
-
 let currentDay = document.getElementById('currentDay');
 //let currentDay = $('#currentDay')
-currentDay.textContent = moment().format('MMMM Do YYYY');
-//currentDay.text(moment().format('MMMM Do YYYY'));
+currentDay.textContent = moment().format('H');
+// moment().format('MMMM Do YYYY, h:mm:ss a'); returns a string
 
 let container = $('.container');
 let inputGroup = $('.input-group');
 let inputEl = $('.form-control');
-
-//Variables need to be in for loop, otherwise only an unordered list for workHours.length - 1 will appear.
 let timeBlock = $('<div>');
-let ulEl = $('<ul>');
+let ulEl = $('ul');
 let textEl = $('<textarea>');
 let saveEl = $('<li>');
 
-
-let workDetails = [];
-let workHours = [];
-
-//Able to save multiple items in Array from setStorage()
-let detailsArr = ['test'];
+let workHours = [9 + " am", 10 + " am", 11 + " am", 12 + " pm", 1 + " pm", 2 + " pm", 3 + " pm", 4 + " pm", 5 + " pm",];
 
 
-    
-//Set new Unordered List
-ulEl.attr('class', 'list-group list-group-horizontal')
-container.append(ulEl);
 
-//Set Work Hour block to the left
-timeBlock.attr('class', 'list-group-item');
-timeBlock.text('Test Time');
-ulEl.append(timeBlock);
 
-//Set Idle Work Detail block in the middle
-textEl.attr('class', 'list-group-item workDetail');
-textEl.text(JSON.parse(localStorage.getItem("savedDetails")));
-ulEl.append(textEl);
 
-//Set Save Button to the right
-saveEl.attr('class', 'list-group-item saveButton');
-saveEl.text('Test Save');
-ulEl.append(saveEl);
+//Reference current items in HTML textarea tags
+let detailsArr = [
+  $('.details0').val(), 
+  $('.details1').val(), 
+  $('.details2').val(), 
+  $('.details3').val(), 
+  $('.details4').val(), 
+  $('.details5').val(), 
+  $('.details6').val(), 
+  $('.details7').val(), 
+  $('.details8').val()
+];
 
-// let currentDetails = {};
-
+//Does Local storage need to work with {} to work right?
+// let currentDetails = {
+//   detail0: detailsArr[0],
+//   detail1: detailsArr[1],
+//   detail2: detailsArr[2],
+//   detail3: detailsArr[3],
+//   detail4: detailsArr[4],
+//   detail5: detailsArr[5],
+//   detail6: detailsArr[6],
+//   detail7: detailsArr[7],
+//   detail8: detailsArr[8],
+//   //https://stackoverflow.com/questions/7866275/access-non-numeric-object-properties-by-index
+//   test9: "meow",
+//   key: function(i) {
+//     return this[Object.keys(this)[i]];
+//   }
+// };
+//obj.key(9); // "meow"
 // console.log(currentDetails);
 
 
-$('.saveButton').click(setStorage);
+//Set up timeblocks
+let i;
+
+for (i = 0; i < workHours.length; i++){
+  let details = $('.details' + i);
+  let list = $('.list' + i);
+  let save = $('.save' + i);
+
+  list.attr('class', 'list-group list-group-horizontal list' + i);
+  container.append(list);
+
+  
+  details.attr('class', 'list-group-item details' + i);
+  list.append(details);
+
+  
+  save.attr('class', 'list-group-item save' + i);
+  save.text('Save');
+  list.append(save);
+  save.click(setStorage);
+
+};
+
+
+
+function setStorage(){
+
+  let getStorage = localStorage.getItem("savedDetails") || "[]";
+  JSON.parse(getStorage);
+  
+  //Replace old array with updated array?
+  detailsArr = detailsArr;
+
+  localStorage.setItem("savedDetails", JSON.stringify(detailsArr));
+  console.log(localStorage);
+};
+
+
+
+// for (i = 0; i < workHours.length; i++){
+//   //Set Idle Work Detail block in the middle
+//   let details = $('.details' + i)
+//   details.attr('class', 'list-group-item details' + i);
+//   details.text(JSON.parse(localStorage.getItem("savedDetails")));
+//   $('.list' + i).append(details);
+// };
+
+// for (i = 0; i < workHours.length; i++){
+//   //Set Save Button to the right
+//   let save = $('.save' + i)
+//   save.attr('class', 'list-group-item save' + i);
+//   save.text('Save');
+//   $('.list' + i).append(save);
+// };
+
+
+
+  //https://stackoverflow.com/questions/7866275/access-non-numeric-object-properties-by-index
+  // var obj = {
+  //   dog: "woof",
+  //   cat: "meow",
+  //   key: function(n) {
+  //       return this[Object.keys(this)[n]];
+  //   }
+  // };
+  // obj.key(1); // "meow"
+
+  // console.log(currentDetails);
+
+// for (i = 0; i < workHours.length; i++){
+//   $('.save' + i).click(setStorage);
+// };
+
 
 
 
 //https://api.jquery.com/text/  --> for use of .val()
-function setStorage(){
-
-  let getStorage = localStorage.getItem("savedDetails") || [];
-  currentDetails = JSON.parse(getStorage);
-  console.log(localStorage);
-
-  // detailsArr.push(currentDetails);
-  // console.log(detailsArr);
-
-  //Need tow ork on scope of textEl to not override itself in local Storage
-  localStorage.setItem("savedDetails", JSON.stringify(textEl.val()));
-  console.log(localStorage);
-  
-};
 
 
+
+
+//this for loop is causing overwrite issues with
+//Set new Unordered List
+// let list0 = $('<ul>');
+// list0.attr('class', 'list-group list-group-horizontal list' + 0);
+// container.append(list0);
+
+// let list1 = $('<ul>');
+// list1.attr('class', 'list-group list-group-horizontal list' + 1);
+// container.append(list1);
+
+// let list2 = $('<ul>');
+// list2.attr('class', 'list-group list-group-horizontal list' + 2);
+// container.append(list2);
+
+// let list3 = $('<ul>');
+// list3.attr('class', 'list-group list-group-horizontal list' + 3);
+// container.append(list3);
+
+// let list4 = $('<ul>');
+// list4.attr('class', 'list-group list-group-horizontal list' + 4);
+// container.append(list4);
+
+// let list5 = $('<ul>');
+// list5.attr('class', 'list-group list-group-horizontal list' + 5);
+// container.append(list5);
+
+// let list6 = $('<ul>');
+// list6.attr('class', 'list-group list-group-horizontal list' + 6);
+// container.append(list6);
+
+// let list7 = $('<ul>');
+// list7.attr('class', 'list-group list-group-horizontal list' + 7);
+// container.append(list7);
+
+// let list8 = $('<ul>');
+// list8.attr('class', 'list-group list-group-horizontal list' + 8);
+// container.append(list8);
   
   
 
@@ -106,6 +205,8 @@ function setStorage(){
 
 
 
+
+
 {/* <ul class="list-group list-group-horizontal">
       <li class="list-group-item">Cras justo odio</li>
       <li class="list-group-item">Dapibus ac facilisis in</li>
@@ -119,6 +220,7 @@ function setStorage(){
       <input type="text" aria-label="First name" class="form-control">
       <input type="text" aria-label="Last name" class="form-control">
     </div> */}
+
 
 
 // Attempt to use $.each method per Stack Overflow
@@ -136,12 +238,18 @@ function setStorage(){
     //     ]
     // };
 
+
+
+
     // $.each(workHours.workHour, function (i) {
     //         $.each(workHours.workHour[i], function (key, val) {
     //             timeBlock.attr('id', 'timeBlock' + val);
     //             console.log(timeBlock);
     //         });
     //     });
+
+
+
 
     //https://stackoverflow.com/questions/6208052/jquery-each-for-objects
         // var data = { "programs": [ { "name":"zonealarm", "price":"500" }, { "name":"kaspersky", "price":"200" } ] };
