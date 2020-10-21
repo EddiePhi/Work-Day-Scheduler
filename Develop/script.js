@@ -1,6 +1,5 @@
-let currentDay = document.getElementById('currentDay');
-//let currentDay = $('#currentDay')
-currentDay.textContent = moment().format('MMMM Do YYYY');
+let currentDay = $('#currentDay');
+currentDay.text(moment().format('MMMM Do YYYY'));
 // moment().format('MMMM Do YYYY, h:mm:ss a'); returns a string
 
 let container = $('.container');
@@ -59,7 +58,7 @@ function setStorage(){
   console.log(localStorage);
 };
 
-//Coloring function Inspiration from lpham2525's github profile with permission from contributor
+//Coloring function Inspiration from lpham2525's github profile with permission from lpham2525's
 //https://github.com/lpham2525/dayplanner/blob/master/assets/javascript/script.js
 
 let currentTime = parseInt(moment().format('H'))
@@ -84,9 +83,6 @@ function checkTime() {
 }
 
 checkTime();
-
-//Run time check every 15 minutes
-// setInterval(checkTime, 90000)
 
 
 
