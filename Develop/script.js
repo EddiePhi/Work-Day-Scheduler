@@ -58,13 +58,14 @@ function setStorage(){
   console.log(localStorage);
 };
 
-//Coloring function Inspiration from lpham2525's github profile with permission from lpham2525's
-//https://github.com/lpham2525/dayplanner/blob/master/assets/javascript/script.js
+//Coloring function Inspiration from LanChi Pham's GitHub profile with permission from LanChi.
+//Pham, L. (2020). dayplanner/script.js. GitHub. https://github.com/lpham2525/dayplanner/blob/master/assets/javascript/script.js
 
+//Convert moment.js string value to string
 let currentTime = parseInt(moment().format('H'))
-console.log(currentTime);
 
 function bgColor(element) {
+  //Locate value where id attribute is located for element calling the function.
   const timeVal = parseInt(element.attr('id'));
   if (timeVal < currentTime) {
     element.css('backgroundColor', 'lightGrey')
@@ -82,6 +83,7 @@ function checkTime() {
   });
 }
 
+//Initialize on page load
 checkTime();
 
 
