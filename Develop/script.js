@@ -63,6 +63,7 @@ function setStorage(){
 //https://github.com/lpham2525/dayplanner/blob/master/assets/javascript/script.js
 
 let currentTime = parseInt(moment().format('H'))
+console.log(currentTime);
 
 function bgColor(element) {
   const timeVal = parseInt(element.attr('id'));
@@ -78,14 +79,14 @@ function bgColor(element) {
 //Check time block vs real time.
 function checkTime() {
   $('.list-group-horizontal').each(function () {
-    bgColor($(this))
+    bgColor($(this));
   });
 }
 
 checkTime();
 
 //Run time check every 15 minutes
-setInterval(checkTime, 90000)
+// setInterval(checkTime, 90000)
 
 
 
