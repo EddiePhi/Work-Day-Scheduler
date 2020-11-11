@@ -26,6 +26,8 @@ for (i = 0; i < workHours.length; i++){
   save.attr('class', 'list-group-item color save' + i);
   save.text('Save');
   list.append(save);
+
+  //within for loop
   save.click(setStorage);
 };
 
