@@ -8,7 +8,7 @@ Description: I developed a Scheduling app using HTML, CSS Bootstrap and JavaScri
 
 Screenshot:
 
-![Work Day Scheduler](./Assets/work-day-scheduler.png)
+![Work Day Scheduler](./Assets/work-day-sched.png)
 
 Technologies: HTML5, CSS3, Bootstrap, JavaScript
 
